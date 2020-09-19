@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~leaflet/dist/leaflet.css";
+
+body {
+    //background-image: url("assets/img/bck.jpg");
+    background-size: 100%;
+}
+
+input {
+    text-transform: capitalize;
+}

@@ -1,0 +1,23 @@
+<<<<<<< HEAD
+# Editor configuration, see http://editorconfig.org
+=======
+# Editor configuration, see https://editorconfig.org
+>>>>>>> 24e059e35163a5d7c7f920b534bf0d711d3cd543
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+<<<<<<< HEAD
+=======
+[*.ts]
+quote_type = single
+
+>>>>>>> 24e059e35163a5d7c7f920b534bf0d711d3cd543
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
