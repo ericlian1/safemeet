@@ -78,25 +78,20 @@ export class DataGetService {
   }
 
 
-  getUrl(map: L.Map) {
+  getUrl() {
     this.url = 'https://api.foursquare.com/v2/venues/search?' + this.credentials + '&near=' + this.location + '&query=' + this.category + '&v=20200919&m=foursquare';
     this.http.get(this.url).subscribe(
       response => {
         this.data = response['response'];
         this.hasChanges = false;
-        for (const c of this.data['venues']){
-          const loc = c['location']
-          const marker = L.marker([loc['lng'], loc['lat']]).addTo(map);
-          console.log(c)
-        }
         return response;        
       });
   }
 
-  searchType(map: L.Map) {
+  searchType() {
     if (this.category.length > 0 && this.category !== 'I look for...') {
       if (this.location.length > 0) {
-        this.getUrl(map);
+        this.getUrl();
       } else {
         this.errorLocation = true;
       }
@@ -105,9 +100,9 @@ export class DataGetService {
     }
   }
 
-  collectData(map: L.Map) {
+  collectData() {
     this.selectData();
-    this.searchType(map);
+    this.searchType();
   }
 
   selectData() {

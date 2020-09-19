@@ -1,4 +1,4 @@
-<div *ngIf="this.dataGetService.data">
+<div *ngIf="!this.dataGetService.data" class = "home">
   <h2>FIND A PLACE FOR...</h2>
   <div class="frame">
 
@@ -33,7 +33,6 @@
 </div>
 
 <!-- results displaying -->
-<div *ngIf="!this.dataGetService.data" [style.display]="this.dataGetService.hasChanges ? 'none' : 'block'">
   <!-- <div class="col-md-6">
     <div *ngFor='let list of this.dataGetService.data?.venues' class="col-md-12 col-sm-12">
         <div class="col-md-6 col-md-6 col-xs-6 result"> - <b>Venue:</b> {{list.name}} <br> &nbsp; <b>Address:</b>{{list.location.formattedAddress}}</div>
@@ -41,5 +40,4 @@
           <i class="fa fa-map" aria-hidden="true"></i> show on map</a> </button></div>
     </div>
   </div> -->
-    <app-map></app-map>
-</div>
+<app-map></app-map>
