@@ -1,7 +1,7 @@
 # project-safemeet
 
 Check out our website here:
-Https://safemeet-ce2bc.web.app
+https://safemeet-ce2bc.web.app
 
 Project was based on the angular7-foursquare-venues [project.](https://github.com/kiril6/angular7-foursquare-venues?fbclid=IwAR2nq37YFU-3boXqtobgne2eFsFBGkNhhBcJtz9On1QvM7vnq-0K6GiBDtI)
 
