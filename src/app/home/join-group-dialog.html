@@ -1,0 +1,10 @@
+<h1 mat-dialog-title> One More Step! </h1>
+<div mat-dialog-content>
+  <p>What's your name?</p>
+  <mat-label>What's Your Name?</mat-label>
+<input matInput [(ngModel)]="name_dialog">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">On Second Thought...</button>
+  <button mat-button (click)="actualClick()" cdkFocusInitial>Let's Safe Meet!</button>
+</div>

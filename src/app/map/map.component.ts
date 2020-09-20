@@ -32,6 +32,9 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
     this.initMap();
     console.log('executed');
+    if(this.dataGetService.data){
+      this.updateMap();
+    }
   }
   updateMap(): void{
     this.markers.forEach(i => {
