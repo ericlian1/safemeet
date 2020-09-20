@@ -15,6 +15,17 @@ const iconDefault = L.icon({
   shadowSize: [41, 41]
 });
 L.Marker.prototype.options.icon = iconDefault;
+
+const redIcon = L.icon({
+  iconUrl: '../../assets/img/marker-icon-red.png',
+  shadowUrl: '../../assets/img/marker-shadow.png',
+
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -74,8 +85,9 @@ export class MapComponent implements OnInit {
       this.markers.push(marker);
     }
     for (const a of this.dataGetService.list_results){
-      const marker = L.marker([a.coord_lat,a.coord_lon]).addTo(this.map).bindPopup('<b>'+a.event_name+'</b><br>'+a.event_description+'<br>'
-        +'Time: ' + a.time + '<br>' + a.address + '<br><br>' + 'Attendees: ' + a.attendees + '<br>' + 'Category: ' + a.category);
+      var s = a.time.toLocaleDateString("en-US");
+      const marker = L.marker([a.coord_lat,a.coord_lon],{icon:redIcon}).addTo(this.map).bindPopup('<b>'+a.event_name+'</b><br>'+a.event_description+'<br>'
+        +'Time: ' + s + '<br>' + a.address + '<br><br>' + 'Attendees: ' + a.attendees + '<br>' + 'Category: ' + a.category);
     }
     this.map.flyTo([this.dataGetService.data.geocode.feature.geometry.center.lat,
         this.dataGetService.data.geocode.feature.geometry.center.lng],12)
