@@ -35,7 +35,9 @@ const redIcon = L.icon({
 export class MapComponent implements OnInit {
 
   public map :  L.Map;
+  //venues = [];
   markers = [];
+  //events = [];
 
   constructor(private dataGetService: DataGetService,public datepipe: DatePipe) {
   }
@@ -78,20 +80,22 @@ export class MapComponent implements OnInit {
     });
     this.markers = [];
     console.log(this.dataGetService.data);
-    for (const c of this.dataGetService.data['venues']){
-      const loc = c['location']
-      var lat = loc['lat']; var lon = loc['lng'];
-      const marker = L.marker([loc['lat'],loc['lng']]).addTo(this.map).bindPopup('<b>'+c.name+'</b><br>' + c.location.formattedAddress.join());
-      this.markers.push(marker);
+    if(this.dataGetService.data){
+      for (const c of this.dataGetService.data['venues']){
+        const loc = c['location']
+        var lat = loc['lat']; var lon = loc['lng'];
+        const marker = L.marker([loc['lat'],loc['lng']]).addTo(this.map).bindPopup('<b>'+c.name+'</b><br>' + c.location.formattedAddress.join());
+        this.markers.push(marker);
+      }
     }
     for (const a of this.dataGetService.list_results){
-      var s = new Date(a.time['seconds']*1000).toLocaleString('en-US');
-      console.log(s);
-      const marker = L.marker([a.coord_lat,a.coord_lon],{icon:redIcon}).addTo(this.map).bindPopup('<b>'+a.event_name+'</b><br>'+a.event_description+'<br>'
-        +'Time: ' + s + '<br>' + a.address + '<br><br>' + 'Attendees: ' + a.attendees + '<br>' + 'Category: ' + a.category);
-    }
+        var s = new Date(a.time['seconds']*1000).toLocaleString('en-US');
+        console.log(s);
+        const marker = L.marker([a.coord_lat,a.coord_lon],{icon:redIcon}).addTo(this.map).bindPopup('<b>'+a.event_name+'</b><br>'+a.event_description+'<br>'
+          +'Time: ' + s + '<br>' + a.address + '<br><br>' + 'Attendees: ' + a.attendees + '<br>' + 'Category: ' + a.category);
+      }
     this.map.flyTo([this.dataGetService.data.geocode.feature.geometry.center.lat,
-        this.dataGetService.data.geocode.feature.geometry.center.lng],12)
+          this.dataGetService.data.geocode.feature.geometry.center.lng],12);
   }
   private initMap(): void {
     this.map = L.map('map').setView([42.2808, -83.7430], 12);

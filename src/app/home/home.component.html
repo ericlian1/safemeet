@@ -7,7 +7,7 @@
       <div class="form-group">
         <select (change)="this.dataGetService.clearError('categories')" [ngClass]="{'error' : this.dataGetService.errorCategory}" [(ngModel)]="dataGetService.category"
           class="form-control input-lg" id="sel1">
-          <option selected>I look for... </option>
+          <option selected>I'm looking for... </option>
           <option value="{{categories.pluralName}}" *ngFor='let categories of this.dataGetService.categories?.categories' >{{categories.pluralName}}</option>
        </select>
       </div>
@@ -45,35 +45,39 @@
   </div>
 </div>
 <div class="row justify-content-end">
-  <div class='col-md-3' style='overflow-y: scroll;height: 500px;padding-left: 10px;'>
-    <h2 style='color: blue'>Locations</h2>
-    <div *ngFor='let list of this.dataGetService.data?.venues' class="row">
-      <div class="col-md-9 col-md-9 col-xs-9 result"> - <b>Venue: </b> {{list.name}} <br> &nbsp; <b>Address:</b>{{list.location.formattedAddress}}</div>
-      <div class="col-md-3 col-sm-3 col-xs-3 result"><button class="btn btn-default btn-sm"><a target="_blank" href="http://maps.google.com/maps?q={{list.location.lat}},{{list.location.lng}}">
-        <i class="fa fa-map" aria-hidden="true"></i> show on map</a> </button></div>
+  <div class='col-md-3' style='overflow-y: scroll;height: 500px;'>
+    <h2 style='color: blue'>Available Locations</h2>
+    <div *ngFor='let list of this.dataGetService.data?.venues' class="row justify-content-center">
+      <div class="col-md-8 result"><b>Venue: </b> {{list.name}} <br> &nbsp; <b>Address:</b>{{list.location.formattedAddress}}</div>
+      <div class="col-md-1 col-sm-1 col-xs-1 result"><button class="btn btn-default btn-sm">
+        <a target="_blank" href="http://maps.google.com/maps?q={{list.location.lat}},{{list.location.lng}}">
+        <i class="fa fa-map" aria-hidden="true"></i></a> </button></div>
     </div>
   </div>
     
   <div class="col-md-3" style='overflow-y: scroll;height: 500px'>
-    <h2 style='color: red'>Events</h2>
+    <h2 style='color: red'>Safe Meets</h2>
+    
     <mat-card class="example-card">
         <mat-card-title>Safe Meets In Your Area!</mat-card-title>
         <mat-card-subtitle>{{dataGetService.category}}</mat-card-subtitle>
       <mat-card-content>
-        
+        <button mat-raised-button (click) = "openCreateDialog()">CREATE EVENT</button>    
       </mat-card-content>
     </mat-card>
     
     <div *ngFor='let event of this.dataGetService.list_results'>
       <mat-card class="example-card">
         <mat-card-title>{{event.event_name}}
-          <br>
-          {{event.time.date | date:'h:mm a z'}}
+        </mat-card-title>
+        <mat-card-subtitle>          <br>
+          {{event.time.toDate() | date:'yyyy-MM-dd h:mm:ss Z'}}
           <br>
           {{event.address}}
-        </mat-card-title>
-        <mat-card-subtitle>{{event.event_description}}</mat-card-subtitle>
+         </mat-card-subtitle>
         <mat-card-content style = "text-align: center">
+          {{event.event_description}}
+          <br>
           <b> Attendees: </b>
           <a *ngFor='let attendee of event.attendees' style = "text-align: center">
               {{attendee}},
@@ -85,7 +89,6 @@
       </mat-card>
     </div>
 
-    <button mat-raised-button (click) = "openCreateDialog()">CREATE EVENT</button>
   </div>
 
   <div class="col-md-6">

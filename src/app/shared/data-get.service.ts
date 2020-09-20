@@ -21,7 +21,7 @@ export class DataGetService {
   private url = '';
   private location = '';
   private radius = 0;
-  public category = 'I look for...';
+  public category = 'I\'m looking for...';
   private errorCategory: boolean = false;
   private errorLocation: boolean = false;
   private hasChanges: boolean = false;

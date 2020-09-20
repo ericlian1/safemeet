@@ -1,5 +1,4 @@
-import { Component, Inject, OnInit, ChangeDetectionStrategy, 
-  OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import { DataGetService } from '../shared/data-get.service';
 import { Subject } from 'rxjs';
 import { IEvent } from '../interfaces/event'
@@ -12,11 +11,14 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
-  constructor(private dataGetService: DataGetService, public dialog: MatDialog) { }
+  constructor(public dataGetService: DataGetService, public dialog: MatDialog,private cdr: ChangeDetectorRef) { }
 
   name : String;
   public curr_event_id : String;
   
+  ngAfterContentChecked() {
+    this.cdr.detectChanges();
+  }
 
   ngOnInit() {
     this.dataGetService.getCategories();
