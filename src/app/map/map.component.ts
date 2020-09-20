@@ -29,13 +29,17 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.dataGetService.collectData(this.map);
+    this.dataGetService.collectData();
+    for (const c of this.dataGetService.data['venues']){
+        const loc = c['location']
+        const marker = L.marker([loc['lng'], loc['lat']]).addTo(this.map);
+      }
     console.log('executed');
   }
 
   private initMap(): void {
     this.map = L.map('map').setView([51.505, -0.09], 13);
-
+    
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
