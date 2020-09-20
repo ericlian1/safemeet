@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { IEvent } from '../interfaces/event';
+import { IEvent, OEvent } from '../interfaces/event';
 import * as L from 'leaflet';
 import 'rxjs/Rx';
 
@@ -18,7 +18,7 @@ export class DataGetService {
   private errorCategory: boolean = false;
   private errorLocation: boolean = false;
   private hasChanges: boolean = false;
-  public list_results: Array<IEvent> = [];
+  public list_results: Array<OEvent> = [];
 
   createEvent(data) {
     return new Promise<any>((resolve, reject) =>{
@@ -29,15 +29,29 @@ export class DataGetService {
     });
   }
 
-  getEvents() {
+  updateEvent(event_id, name) {
+    var list_names : String[] = [];
+    for(var i = 0; i < this.list_results.length; ++i) {
+      if(this.list_results[i].event_id == event_id) {
+        list_names = this.list_results[i].attendees;
+      }
+    }
+    list_names.push(name);
+    this.firestore.collection("scheduled_events").doc(event_id).set(
+      {attendees:list_names}, {merge: true}
+    );
     
+  }
+
+
+  getEvents() { 
     this.firestore.collection("scheduled_events").get().subscribe(
       (result: any) => {
         result.forEach(doc => {
           console.log(doc.id, '=>', doc.data());
           this.list_results = [];
-          var curr_event : IEvent = {
-            
+          var curr_event : OEvent = {
+            event_id: doc.data()['event_id'],
             event_name: doc.data()['event_name'],
             event_description: doc.data()['event_description'],
             time: doc.data()['time'],
