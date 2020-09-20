@@ -9,4 +9,4 @@ Commands to start after clone:
 npm install
 npm start
 
-Access url http://localhost:4600
+Run locally at http://localhost:4600
