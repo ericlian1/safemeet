@@ -16,8 +16,8 @@ export class DataGetService {
   dataReady = new BehaviorSubject(this.eventsReady&&this.venuesReady);
   public categories;
   public data;
-  private credentials = 'client_id=QM2U4XNDGAZS2PZUYEH001OCBDBUBXBT1VZT5N4CT1DOI0ZX&client_secret=JFS0JK3BY3KND5OIY3FMEA4P5VP5G3FV31A4THXELDPB0ASA';
-  //private credentials = 'client_id=T3G1LFSOOT1SLHVM5M0Z5TAORW2G0ZDJRPO0XH4DMZ5CJJD5&client_secret=1CYBI50VHYH313YZUBM41NL2DLESNEJTIXPN5IFDPNGAYAAQ';
+  //private credentials = 'client_id=QM2U4XNDGAZS2PZUYEH001OCBDBUBXBT1VZT5N4CT1DOI0ZX&client_secret=JFS0JK3BY3KND5OIY3FMEA4P5VP5G3FV31A4THXELDPB0ASA';
+  private credentials = 'client_id=T3G1LFSOOT1SLHVM5M0Z5TAORW2G0ZDJRPO0XH4DMZ5CJJD5&client_secret=1CYBI50VHYH313YZUBM41NL2DLESNEJTIXPN5IFDPNGAYAAQ';
   private url = '';
   private location = '';
   private radius = 0;
