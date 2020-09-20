@@ -6,6 +6,7 @@ export interface IEvent {
     coord_lat: number;
     coord_lon: number;
     category: String;
+    address: String;
 }
 
 export interface OEvent {
@@ -16,5 +17,6 @@ export interface OEvent {
     attendees: Array<String>;
     coord_lat: number;
     coord_lon: number;
+    address: String;
     category: String;
 }

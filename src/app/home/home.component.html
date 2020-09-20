@@ -1,9 +1,9 @@
 <div>
-  <h2>FIND A PLACE FOR...</h2>
+  <img src='../../assets/img/SafeMeet Logo.png' class='logo'/>
   <div class="row" style="margin-left: 20px;margin-right: 20px;">
 
     <!-- 1st field -->
-    <div class="col-md-6 col-sm-6 col-xs-6">
+    <div class="col-md-3 col-sm-3 col-xs-3">
       <div class="form-group">
         <select (change)="this.dataGetService.clearError('categories')" [ngClass]="{'error' : this.dataGetService.errorCategory}" [(ngModel)]="dataGetService.category"
           class="form-control input-lg" id="sel1">
@@ -20,6 +20,19 @@
           class="form-control input-lg" placeholder="Where..." [(ngModel)]="dataGetService.location">
       </div>
     </div>
+    <div class='col-md-1' style='vertical-align: middle;'>
+      <h2>within</h2>
+    </div>
+    <!-- 3rd field -->
+    <div class="col-md-1 col-sm-1 col-xs-1">
+      <div class="form-group">
+        <input (change)="this.dataGetService.clearError('radius')" type="text"
+          class="form-control input-lg" placeholder="Radius (in miles)" [(ngModel)]="dataGetService.radius">
+      </div>
+    </div>
+    <div class='col-md-1' style='vertical-align: middle;'>
+      <h2>Miles</h2>
+    </div>
 
     <!-- search button -->
     <div class="col-md-2 col-sm-2 col-xs-2">
@@ -32,19 +45,17 @@
   </div>
 </div>
 <div class="row">
-  <div class='col-md' >
-    <cdk-virtual-scroll-viewport class="col-md" itemSize="10" style='overflow:auto;text-align: center; margin-left: 50px;'
-      *ngIf='this.dataGetService.data'>
-        <div *cdkVirtualFor='let list of this.dataGetService.data.venues' [class.alternate]="odd">
-          <div> <b>{{list.name}}</b> </div>
-          <div><b>Address:</b>{{list.location.formattedAddress}}</div>
-          <div class="result"><button class="btn btn-default btn-sm"><a target="_blank" href="http://maps.google.com/maps?q={{list.location.lat}},{{list.location.lng}}">
-            <i class="fa fa-map" aria-hidden="true"></i> show on map</a> </button></div>
-        </div>
-    </cdk-virtual-scroll-viewport>
+  <div class='col-md-3' *ngIf='this.dataGetService.data' style='overflow-y: scroll;'>
+    <h2>Locations</h2>
+    <div *ngFor='let list of this.dataGetService.data?.venues' class="row">
+      <div class="col-md-9 col-md-9 col-xs-9 result"> - <b>Venue: </b> {{list.name}} <br> &nbsp; <b>Address:</b>{{list.location.formattedAddress}}</div>
+      <div class="col-md-3 col-sm-3 col-xs-3 result"><button class="btn btn-default btn-sm"><a target="_blank" href="http://maps.google.com/maps?q={{list.location.lat}},{{list.location.lng}}">
+        <i class="fa fa-map" aria-hidden="true"></i> show on map</a> </button></div>
+    </div>
   </div>
     
-  <div class="col-md-12 col-sm-12">
+  <div class="col-md-3" *ngIf='this.dataGetService.list_results.length != 0' style='overflow-y: scroll;'>
+    <h2>Events</h2>
     <mat-card class="example-card">
         <mat-card-title>Safe Meets In Your Area!</mat-card-title>
         <mat-card-subtitle>{{dataGetService.category}}</mat-card-subtitle>
@@ -53,13 +64,13 @@
       </mat-card-content>
     </mat-card>
     
-
     <div *ngFor='let event of this.dataGetService.list_results'>
-
       <mat-card class="example-card">
         <mat-card-title>{{event.event_name}}
           <br>
           {{event.time.toDate() | date}}
+          <br>
+          {{event.address}}
         </mat-card-title>
         <mat-card-subtitle>{{event.event_description}}</mat-card-subtitle>
         <mat-card-content style = "text-align: center">
@@ -77,7 +88,7 @@
     <button mat-raised-button (click) = "openCreateDialog()">CREATE EVENT</button>
   </div>
 
-  <div class="col-md-8">
+  <div class="col-md">
     <app-map></app-map>
   </div>
 </div>

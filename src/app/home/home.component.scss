@@ -1,5 +1,6 @@
 .example-card {
   max-width: 400px;
+  margin: 10px;
 }
 .map-container {
   position: absolute;
@@ -9,7 +10,12 @@
   bottom: 0;
   margin: 30px;
 }
-
+.logo{
+  height: 100px;
+  aspect-ratio: 1;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .map-frame {
   border: 2px solid black;
   height: 100%;

@@ -32,23 +32,56 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
     this.initMap();
     console.log('executed');
-    if(this.dataGetService.data){
-      this.updateMap();
-    }
+    this.dataGetService.dataReady.subscribe(
+      value => {
+        console.log(value);
+        if (value == true){
+          this.updateMap();
+        }
+    })
   }
+  // renderEvent(){
+  //   return 
+  //   <mat-card class="example-card">
+  //       <mat-card-title>{{event.event_name}}
+  //         <br>
+  //         {{event.time.toDate() | date}}
+  //         <br>
+  //         {{event.address}}
+  //       </mat-card-title>
+  //       <mat-card-subtitle>{{event.event_description}}</mat-card-subtitle>
+  //       <mat-card-content style = "text-align: center">
+  //         <b> Attendees: </b>
+  //         <a *ngFor='let attendee of event.attendees' style = "text-align: center">
+  //             {{attendee}},
+  //         </a>
+  //       </mat-card-content>
+  //       <mat-card-actions>
+  //         <button mat-raised-button (click) = "openJoinDialog(event.event_id)">JOIN</button>
+  //       </mat-card-actions>
+  //     </mat-card>;
+  // }
   updateMap(): void{
     this.markers.forEach(i => {
       this.map.removeLayer(i)
     });
     this.markers = [];
+    console.log(this.dataGetService.data);
     for (const c of this.dataGetService.data['venues']){
       const loc = c['location']
-      const marker = L.marker([loc['lng'], loc['lat']]).addTo(this.map);
+      var lat = loc['lat']; var lon = loc['lng'];
+      const marker = L.marker([loc['lat'],loc['lng']]).addTo(this.map).bindPopup('<b>'+c.name+'</b><br>' + c.location.formattedAddress.join());
       this.markers.push(marker);
     }
+    for (const a of this.dataGetService.list_results){
+      const marker = L.marker([a.coord_lat,a.coord_lon]).addTo(this.map).bindPopup('<b>'+a.event_name+'</b><br>'+a.event_description+'<br>'
+        +'Time: ' + a.time + '<br>' + a.address + '<br><br>' + 'Attendees: ' + a.attendees + '<br>' + 'Category: ' + a.category);
+    }
+    this.map.flyTo([this.dataGetService.data.geocode.feature.geometry.center.lat,
+        this.dataGetService.data.geocode.feature.geometry.center.lng],12)
   }
   private initMap(): void {
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+    this.map = L.map('map').setView([42.2808, -83.7430], 12);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

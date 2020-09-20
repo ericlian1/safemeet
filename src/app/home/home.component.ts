@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy,ViewChild, 
+  OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { DataGetService } from '../shared/data-get.service';
 import { MapComponent } from '../map/map.component';
-import { IEvent } from '../interfaces/event'        // Hello, Good Sir
-// I'm editing the service.ts file m8
-=======
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { DataGetService } from '../shared/data-get.service';
+import { Subject } from 'rxjs';
 import { IEvent } from '../interfaces/event'
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
->>>>>>> 74832dd968d152ea8cad79b0fab896d0b38832e6
 
 @Component({
   selector: 'app-home',
@@ -22,24 +17,14 @@ export class HomeComponent implements OnInit {
 
   name : String;
   public curr_event_id : String;
+  @ViewChild('child')
+  private map: MapComponent;
+  
 
   ngOnInit() {
     this.dataGetService.getCategories();
 
-    var data_input : IEvent = {
-      event_name: 'Recretional Outing',
-      event_description: 'For Eric\'s Birthday',
-      time: new Date(),
-      category: this.dataGetService.category,
-      attendees: ['Eric', 'Sky', 'Solomon', 'Alex'],
-      coord_lat: 42.296650,
-      coord_lon: -83.721287
-    };
-
     // this.dataGetService.createEvent(data_input);
-
-    var hello = this.dataGetService.getEvents();
-    console.log(hello);
   }
 
   openJoinDialog(current_event): void {
@@ -55,6 +40,17 @@ export class HomeComponent implements OnInit {
       
     });
   }
+
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(createGroupDialog, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.name = result;
+    });
+  }
 }
 
 
@@ -63,7 +59,6 @@ export class HomeComponent implements OnInit {
   templateUrl: 'join-group-dialog.html',
 })
 export class joinGroupDialog {
-
   name_dialog : String;
   curr_event_id_dialog : String;
 
@@ -83,5 +78,50 @@ export class joinGroupDialog {
     this.dialogRef.close();
     this.dataGetService.getEvents();
   }
+}
 
+@Component({
+  selector: 'create-group-dialog',
+  templateUrl: 'create-group-dialog.html',
+})
+export class createGroupDialog {
+  name_dialog : String;
+
+  constructor(
+    public dialogRef: MatDialogRef<createGroupDialog>,
+    private dataGetService: DataGetService
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+    this.dataGetService.getEvents();
+  }
+
+  actualClick(): void {
+
+    var name_input;
+    var event_name_input;
+    var event_description_input;
+    var event_time_input;
+    var attendees;
+    var coord_lat;
+    var address_input;
+
+    this.dataGetService.getLatLon(address_input);
+
+
+    var data_input : IEvent = {
+      event_name: 'Recretional Outing',
+      event_description: 'For Eric\'s Birthday',
+      time: event_time_input,
+      category: this.dataGetService.category,
+      attendees: ['Eric', 'Sky', 'Solomon', 'Alex'],
+      coord_lat: 42.296650,
+      coord_lon: -83.721287,
+      address: '1780 Broadway St, Ann Arbor, MI 48105'
+    };
+    this.dataGetService.createEvent(data_input)
+    this.dialogRef.close();
+    this.dataGetService.getEvents();
+  }
 }
