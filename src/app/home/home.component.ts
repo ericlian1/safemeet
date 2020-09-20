@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit, ChangeDetectionStrategy,ViewChild, 
+import { Component, Inject, OnInit, ChangeDetectionStrategy, 
   OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { DataGetService } from '../shared/data-get.service';
-import { MapComponent } from '../map/map.component';
 import { Subject } from 'rxjs';
 import { IEvent } from '../interfaces/event'
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -17,8 +16,6 @@ export class HomeComponent implements OnInit {
 
   name : String;
   public curr_event_id : String;
-  @ViewChild('child')
-  private map: MapComponent;
   
 
   ngOnInit() {
@@ -103,19 +100,19 @@ export class createGroupDialog {
     var event_name_input;
     var event_description_input;
     var event_time_input;
-    var attendees;
     var coord_lat;
+    var coord_lon;
     var address_input;
 
     this.dataGetService.getLatLon(address_input);
 
 
     var data_input : IEvent = {
-      event_name: 'Recretional Outing',
-      event_description: 'For Eric\'s Birthday',
+      event_name: event_name_input,
+      event_description: event_description_input,
       time: event_time_input,
       category: this.dataGetService.category,
-      attendees: ['Eric', 'Sky', 'Solomon', 'Alex'],
+      attendees: [name_input],
       coord_lat: 42.296650,
       coord_lon: -83.721287,
       address: '1780 Broadway St, Ann Arbor, MI 48105'

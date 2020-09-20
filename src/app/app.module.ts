@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { MapComponent } from './map/map.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { joinGroupDialog } from './home/home.component';
+import { DatePipe } from '@angular/common'
 
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
@@ -50,7 +51,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatButtonModule,
     MatDatepickerModule
   ],
-  providers: [DataGetService],
+  providers: [DataGetService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

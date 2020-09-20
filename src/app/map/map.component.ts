@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import * as L from 'leaflet';
 import { DataGetService } from '../shared/data-get.service';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -34,10 +35,9 @@ const redIcon = L.icon({
 export class MapComponent implements OnInit {
 
   public map :  L.Map;
-  mapOptions: L.MapOptions;
   markers = [];
 
-  constructor(private dataGetService: DataGetService) {
+  constructor(private dataGetService: DataGetService,public datepipe: DatePipe) {
   }
 
   ngOnInit(): void {
@@ -85,7 +85,8 @@ export class MapComponent implements OnInit {
       this.markers.push(marker);
     }
     for (const a of this.dataGetService.list_results){
-      var s = a.time.toLocaleDateString("en-US");
+      var s = new Date(a.time['seconds']*1000).toLocaleString('en-US');
+      console.log(s);
       const marker = L.marker([a.coord_lat,a.coord_lon],{icon:redIcon}).addTo(this.map).bindPopup('<b>'+a.event_name+'</b><br>'+a.event_description+'<br>'
         +'Time: ' + s + '<br>' + a.address + '<br><br>' + 'Attendees: ' + a.attendees + '<br>' + 'Category: ' + a.category);
     }

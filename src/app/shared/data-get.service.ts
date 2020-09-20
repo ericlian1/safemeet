@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,ApplicationRef  } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { IEvent, OEvent } from '../interfaces/event';
@@ -9,7 +9,7 @@ import { MapComponent } from 'app/map/map.component';
 
 @Injectable()
 export class DataGetService {
-  constructor(private http: HttpClient, private firestore: AngularFirestore) { }
+  constructor(private http: HttpClient, private firestore: AngularFirestore,private ref: ApplicationRef) { }
 
   private eventsReady = false;
   private venuesReady = false;
@@ -51,6 +51,7 @@ export class DataGetService {
     this.firestore.collection("scheduled_events").doc(event_id).set(
       {attendees:updated_object.attendees,}, {merge: true}
     );
+    this.ref.tick();
   }
 
   getEvents() { 
@@ -75,6 +76,7 @@ export class DataGetService {
         this.eventsReady = true;
         this.dataReady.next(this.eventsReady&&this.venuesReady);
         console.log(this.list_results)
+        this.ref.tick();
 
         
         return result;
@@ -98,6 +100,7 @@ export class DataGetService {
         this.hasChanges = false;
         this.venuesReady = true;
         this.dataReady.next(this.eventsReady&&this.venuesReady);
+        this.ref.tick();
         return response;        
       });
   }

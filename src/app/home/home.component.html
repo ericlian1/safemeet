@@ -44,8 +44,8 @@
 
   </div>
 </div>
-<div class="row" style='height: 800px'>
-  <div class='col-md-3' *ngIf='this.dataGetService.data' style='overflow-y: scroll;'>
+<div class="row justify-content-end">
+  <div class='col-md-3' style='overflow-y: scroll;height: 500px;padding-left: 10px;'>
     <h2 style='color: blue'>Locations</h2>
     <div *ngFor='let list of this.dataGetService.data?.venues' class="row">
       <div class="col-md-9 col-md-9 col-xs-9 result"> - <b>Venue: </b> {{list.name}} <br> &nbsp; <b>Address:</b>{{list.location.formattedAddress}}</div>
@@ -54,7 +54,7 @@
     </div>
   </div>
     
-  <div class="col-md-3" *ngIf='this.dataGetService.list_results.length != 0' style='overflow-y: scroll'>
+  <div class="col-md-3" style='overflow-y: scroll;height: 500px'>
     <h2 style='color: red'>Events</h2>
     <mat-card class="example-card">
         <mat-card-title>Safe Meets In Your Area!</mat-card-title>
@@ -88,7 +88,7 @@
     <button mat-raised-button (click) = "openCreateDialog()">CREATE EVENT</button>
   </div>
 
-  <div class="col-md">
+  <div class="col-md-6">
     <app-map></app-map>
   </div>
 </div>
