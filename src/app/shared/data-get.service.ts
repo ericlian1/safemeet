@@ -30,28 +30,30 @@ export class DataGetService {
   }
 
   updateEvent(event_id, name) {
-    var list_names : String[] = [];
+    console.log("Updating Event!!")
+    console.log("event_id: " + event_id)
+    console.log("name: " + name)
+    var updated_object;
     for(var i = 0; i < this.list_results.length; ++i) {
       if(this.list_results[i].event_id == event_id) {
-        list_names = this.list_results[i].attendees;
+        this.list_results[i].attendees.push(name);
+        updated_object = this.list_results[i];
       }
     }
-    list_names.push(name);
+    console.log(updated_object)
     this.firestore.collection("scheduled_events").doc(event_id).set(
-      {attendees:list_names}, {merge: true}
+      {attendees:updated_object.attendees,}, {merge: true}
     );
-    
   }
 
 
   getEvents() { 
     this.firestore.collection("scheduled_events").get().subscribe(
       (result: any) => {
+        this.list_results = [];
         result.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
-          this.list_results = [];
           var curr_event : OEvent = {
-            event_id: doc.data()['event_id'],
+            event_id: doc.id,
             event_name: doc.data()['event_name'],
             event_description: doc.data()['event_description'],
             time: doc.data()['time'],
@@ -62,6 +64,8 @@ export class DataGetService {
           }
           this.list_results.push(curr_event);
         });
+
+        console.log(this.list_results)
 
         
         return result;

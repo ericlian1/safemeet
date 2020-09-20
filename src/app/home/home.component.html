@@ -40,4 +40,50 @@
           <i class="fa fa-map" aria-hidden="true"></i> show on map</a> </button></div>
     </div>
   </div> -->
+  <div class="col-md-12 col-sm-12">
+    <mat-card class="example-card">
+        <mat-card-title>Safe Meets In Your Area!</mat-card-title>
+        <mat-card-subtitle>{{dataGetService.category}}</mat-card-subtitle>
+      <mat-card-content>
+        
+      </mat-card-content>
+    </mat-card>
+    
+
+    <div *ngFor='let event of this.dataGetService.list_results'>
+
+      <mat-card class="example-card">
+        <mat-card-title>{{event.event_name}}
+          <br>
+          {{event.time.toDate() | date}}
+        </mat-card-title>
+        <mat-card-subtitle>{{event.event_description}}</mat-card-subtitle>
+        <mat-card-content style = "text-align: center">
+          <b> Attendees: </b>
+          <a *ngFor='let attendee of event.attendees' style = "text-align: center">
+              {{attendee}},
+          </a>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button (click) = "openJoinDialog(event.event_id)">JOIN</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- <div class="col-md-6 col-md-6 col-xs-6 result"> - <b>Place:</b> {{event.event_name}} 
+        <br>
+        &nbsp; <b>Time: </b>{{event.time.toDate() | date}}
+        <br>
+        &nbsp;<b>Category: </b> {{event.category}}
+        <br>
+        &nbsp; <b>Description: </b>{{event.event_description}}
+        <br>
+        &nbsp; <b>Attendees:</b>
+        
+        
+        <button routerLink="/home/results" type="button" class="btn btn-primary btn-lg" (click)="dataGetService.joinGroup(event.event_id)"><i class="fa fa-search" aria-hidden="true"></i> Search </button>
+        
+        <br>
+      </div> -->
+    </div>
+  </div>
 <app-map></app-map>

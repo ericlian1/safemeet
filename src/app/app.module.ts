@@ -10,10 +10,16 @@ import { DataGetService } from './shared/data-get.service';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { MapComponent } from './map/map.component';
+import { joinGroupDialog } from './home/home.component';
 
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "../environments/environment";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -22,9 +28,12 @@ import { environment } from "../environments/environment";
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    MapComponent
+    MapComponent,
+    joinGroupDialog
   ],
   imports: [
+    MatFormFieldModule,
+    MatDialogModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -32,7 +41,10 @@ import { environment } from "../environments/environment";
     AppRoutingModule,
     LeafletModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [DataGetService],
   bootstrap: [AppComponent]
