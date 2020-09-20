@@ -1,4 +1,4 @@
-<div class="map-container" *ngIf="this.dataGetService.data" 
-  [style.display]="this.dataGetService.hasChanges ? 'none' : 'block'">
-  <div id="map"></div>
+<div id="map"
+  leaflet
+  [leafletOptions]="mapOptions">
 </div>

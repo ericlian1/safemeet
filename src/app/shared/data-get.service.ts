@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { IEvent } from '../interfaces/event';
 import * as L from 'leaflet';
 import 'rxjs/Rx';
+import { MapComponent } from 'app/map/map.component';
 
 @Injectable()
 export class DataGetService {

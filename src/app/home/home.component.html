@@ -1,6 +1,6 @@
-<div *ngIf="!this.dataGetService.data" class = "home">
+<div>
   <h2>FIND A PLACE FOR...</h2>
-  <div class="frame">
+  <div class="row" style="margin-left: 20px;margin-right: 20px;">
 
     <!-- 1st field -->
     <div class="col-md-6 col-sm-6 col-xs-6">
@@ -31,13 +31,26 @@
 
   </div>
 </div>
+<div class="row">
+  <div class='col-md' >
+    <cdk-virtual-scroll-viewport class="col-md" itemSize="10" style='overflow:auto;text-align: center; margin-left: 50px;'
+      *ngIf='this.dataGetService.data'>
+        <div *cdkVirtualFor='let list of this.dataGetService.data.venues' [class.alternate]="odd">
+          <div> <b>{{list.name}}</b> </div>
+          <div><b>Address:</b>{{list.location.formattedAddress}}</div>
+          <div class="result"><button class="btn btn-default btn-sm"><a target="_blank" href="http://maps.google.com/maps?q={{list.location.lat}},{{list.location.lng}}">
+            <i class="fa fa-map" aria-hidden="true"></i> show on map</a> </button></div>
+        </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+
+
+  <div class="col-md-8">
+    <app-map></app-map>
+  </div>
+</div>
 
 <!-- results displaying -->
   <!-- <div class="col-md-6">
-    <div *ngFor='let list of this.dataGetService.data?.venues' class="col-md-12 col-sm-12">
-        <div class="col-md-6 col-md-6 col-xs-6 result"> - <b>Venue:</b> {{list.name}} <br> &nbsp; <b>Address:</b>{{list.location.formattedAddress}}</div>
-        <div class="col-md-6 col-sm-6 col-xs-6 result"><button class="btn btn-default btn-sm"><a target="_blank" href="http://maps.google.com/maps?q={{list.location.lat}},{{list.location.lng}}">
-          <i class="fa fa-map" aria-hidden="true"></i> show on map</a> </button></div>
-    </div>
+    
   </div> -->
-<app-map></app-map>

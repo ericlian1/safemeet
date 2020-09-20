@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { DataGetService } from '../shared/data-get.service';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -20,23 +20,30 @@ L.Marker.prototype.options.icon = iconDefault;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements OnInit {
 
-  private map;
+  public map :  L.Map;
+  mapOptions: L.MapOptions;
+  markers = [];
 
   constructor(private dataGetService: DataGetService) {
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.initMap();
-    this.dataGetService.collectData();
-    for (const c of this.dataGetService.data['venues']){
-        const loc = c['location']
-        const marker = L.marker([loc['lng'], loc['lat']]).addTo(this.map);
-      }
     console.log('executed');
   }
-
+  updateMap(): void{
+    this.markers.forEach(i => {
+      this.map.removeLayer(i)
+    });
+    this.markers = [];
+    for (const c of this.dataGetService.data['venues']){
+      const loc = c['location']
+      const marker = L.marker([loc['lng'], loc['lat']]).addTo(this.map);
+      this.markers.push(marker);
+    }
+  }
   private initMap(): void {
     this.map = L.map('map').setView([51.505, -0.09], 13);
     
