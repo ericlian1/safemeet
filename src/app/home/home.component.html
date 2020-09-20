@@ -68,22 +68,8 @@
           <button mat-raised-button (click) = "openJoinDialog(event.event_id)">JOIN</button>
         </mat-card-actions>
       </mat-card>
-
-      <!-- <div class="col-md-6 col-md-6 col-xs-6 result"> - <b>Place:</b> {{event.event_name}} 
-        <br>
-        &nbsp; <b>Time: </b>{{event.time.toDate() | date}}
-        <br>
-        &nbsp;<b>Category: </b> {{event.category}}
-        <br>
-        &nbsp; <b>Description: </b>{{event.event_description}}
-        <br>
-        &nbsp; <b>Attendees:</b>
-        
-        
-        <button routerLink="/home/results" type="button" class="btn btn-primary btn-lg" (click)="dataGetService.joinGroup(event.event_id)"><i class="fa fa-search" aria-hidden="true"></i> Search </button>
-        
-        <br>
-      </div> -->
     </div>
+
+    <button mat-raised-button (click) = "openCreateDialog()">CREATE EVENT</button>
   </div>
 <app-map></app-map>
