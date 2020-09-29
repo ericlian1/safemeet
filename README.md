@@ -20,4 +20,5 @@ Run locally at http://localhost:4600
 
 ## Credits:
 [Eric Lian](https://github.com/ericlian1), [Alex Hsia](https://github.com/ahsia22)
+
 Based on [kiril6](https://github.com/kiril6)'s project [angular7-foursquare-venues.](https://github.com/kiril6/angular7-foursquare-venues)
